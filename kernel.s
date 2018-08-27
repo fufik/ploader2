@@ -6,9 +6,6 @@ mov ax, cs
 mov ds, ax
 mov es, ax
 
-mov ax, 0x8000
-mov ss, ax
-mov sp, 0xf000
 jmp start
 msg1 db 'Hola', 0
 videopage db 0
@@ -18,16 +15,6 @@ videopage db 0
 
 
 start:
-	mov ax, cs
-        mov ds, ax
-        mov es, ax
-	mov dx, 0
-
-	;mov ah,00
-	;mov al,10h
-	;int 10h ;videmode
-	;jmp printhola
-init:
 	mov al, 10h        ;videomode
         mov ah, 0
         int 10h            ;change videomode to 0x10 (640x350)
@@ -41,11 +28,6 @@ printhola:
         mov dh, 0
         call putcurs
 	
-	;mov al, 'a'
-	;mov ah,eh
-	;int 10h
-        ;mov si, msg1
-
 	mov si,pic
 	call print
 	cli

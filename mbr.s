@@ -1,7 +1,7 @@
-; boot loader
+; bootloader
 %define BASE	0x100	; 0x0100:0x0 = 0x1000
 %define BASE_W_OFFSET 0x1000
-%define KSIZE	2	; nbr de secteurs de 512 octets a charger
+%define KSIZE	2	; número de sectores de 512 octetos a cargar
 
 [BITS 16]
 [ORG 0]
@@ -39,7 +39,7 @@ start:
 	
 	mov ax, 0
 	mov dl, [bootdrv]
-	int 13h ; init le disk
+	int 13h ; reset the drive's controller
 			
 	push es
 	mov ax, BASE
@@ -58,15 +58,12 @@ start:
 
 	jmp _start
 edd:
-	;push ds
-	;mov ds, packet
-	;mov si, 10h
 	mov si, packet
 	mov dl, [bootdrv]
 	mov ah,42h
 	int 13h
 	pop ds
-	; saut vers le dump
+
 _start: jmp word BASE:0
 
 packet: db 200h ;size
@@ -77,5 +74,5 @@ packet: db 200h ;size
        dq 1
        dq BASE_W_OFFSET
 
-times 510-($-$$) db 0	; fill the file with 0
-dw 0AA55h		; End of the file with AA55
+times 510-($-$$) db 0	; fill the rest of the file with 0
+dw 0AA55h		; End bit of the file is AA55
