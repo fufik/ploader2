@@ -15,23 +15,6 @@ print:
 _print:
 	ret
 
-getkey:
-	mov ax, 0
-	int 16h
-	ret
-
-getkey_:
-	mov ax, 0
-	mov ah, 1
-	int 16h
-	jz _getkey
-	call getkey
-_getkey:
-	ret
-	; al : ascii ==> ax
-
-
-
 putchar:
 	; char al, color bl
 	mov ah, 9
@@ -46,12 +29,6 @@ putchar_: ; mode teletype
 	mov bh, 0
 	int 10h
 	ret
-
-getchar:
-	mov ah, 8
-	mov bh, 0
-	int 10h
-	; char al, color bl 
 
 getcurs:
 	mov ah, 3
